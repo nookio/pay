@@ -26,7 +26,7 @@ public class WechatAppPay extends MyBasePay<String> {
     private static Logger.ALogger logger = Logger.of(WechatAppPay.class);
 
     @Override
-    protected String createNewPay(Integer payerId, String host, Object... all) {
+    public String createNewPay(Integer payerId, String host, Object... all) {
         Integer count = (Integer) all[0];
         Integer itemId = (Integer) all[1];
         Payment payment = createPayment(payerId, Payment.TYPE_ALIPAY_APP, PayStatus.PREPAY.name(), false, new Normal(count, itemId));
@@ -37,7 +37,7 @@ public class WechatAppPay extends MyBasePay<String> {
     }
 
     @Override
-    protected String infoNotify(Map<String, String> requestParams) {
+    public String infoNotify(Map<String, String> requestParams) {
         //订单号
         String outTradeNo =  requestParams.get("out_trade_no");
         //微信交易号
@@ -50,7 +50,7 @@ public class WechatAppPay extends MyBasePay<String> {
         String gmtPayment = requestParams.get("time_end");
         if (requestParams.get("result_code").equals("SUCCESS") && requestParams.get("return_code").equals("SUCCESS")) {
             Date payedAt = DateUtil.timeMillToDate(gmtPayment);
-            Integer userId = resultOfPayment(outTradeNo, tradeNo, tradeStatus, totalFee, payedAt);
+            Integer userId = resultOfPayment(outTradeNo, tradeNo, totalFee, payedAt);
             logger.info("用户"+userId+"微信支付成功");
             logger.info("支付信息为"+requestParams.toString());
             return notifySuccess();
@@ -87,7 +87,7 @@ public class WechatAppPay extends MyBasePay<String> {
     }
 
     @Override
-    protected String notifySuccess() {
+    public String notifySuccess() {
         Map<String,String> notifiyMap = new HashMap<>();
         notifiyMap.put("return_code", "SUCCESS");
         notifiyMap.put("return_msg", "OK");
@@ -96,7 +96,7 @@ public class WechatAppPay extends MyBasePay<String> {
     }
 
     @Override
-    protected String notifyFail() {
+    public String notifyFail() {
         Map<String,String> notifiyMap = new HashMap<>();
         notifiyMap.put("return_code", "FAIL");
         notifiyMap.put("return_msg", "验证open_id和product_id失败。");

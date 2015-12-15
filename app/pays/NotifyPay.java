@@ -30,6 +30,9 @@ public class NotifyPay {
             case Payment.TYPE_IOS_IN_APP_PURCHASE:
                 basePay = new IosInAppPurchasePay();
                 break;
+            case Payment.TYPE_WECHAT_SCAN:
+                basePay = new WechatScanPay();
+                break;
             default:
                 basePay = null;
         }

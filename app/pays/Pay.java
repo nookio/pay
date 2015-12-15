@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by nookio on 15/12/14.
  */
-public abstract class Pay<E, T> {
+public abstract class Pay<E, T, P> {
 
     protected Map<String, String> prePayInfo = new LinkedHashMap<>();
 
@@ -27,7 +27,7 @@ public abstract class Pay<E, T> {
     // 一般具体实现是在具体的支付方式中
     protected abstract String infoNotify(Map<String, String> requestParams);
 
-    protected abstract Payment createPayment(Integer payerId, Short paymentType, String tradeStatus, boolean test, E... all);
+    protected abstract P createPayment(Integer payerId, Short paymentType, String tradeStatus, boolean test, E... all);
 
     protected abstract Integer resultOfPayment(String outTradeNo, String tradeNo, String totalFee, Date payedAt);
 

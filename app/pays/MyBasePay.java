@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by nookio on 15/12/14.
  */
-public abstract class MyBasePay<T> extends Pay<Object, T> {
+public abstract class MyBasePay<T> extends Pay<Object, T, Payment> {
 
     @Inject
     private PaymentService paymentService;
